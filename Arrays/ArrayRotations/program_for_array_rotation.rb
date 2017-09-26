@@ -22,6 +22,7 @@ class ArrayRotation
   #    arr[] = [3, 4, 5, 6, 7, 6, 7]
   # 3) Store back the d elements
   #    arr[] = [3, 4, 5, 6, 7, 1, 2]
+  # O(n)
 
   def use_temp_array
     @rotate_by = @rotate_by % @array.length
@@ -52,7 +53,7 @@ class ArrayRotation
   #   For i = 0 to i < d
   #     Left rotate all elements of arr[] by one
   # end
-
+  # O(n*d)
   # Function to left rotate arr[] of size n by d
   def left_rotate()
     for i in 0...@rotate_by
@@ -72,6 +73,37 @@ class ArrayRotation
     @array[n-1] = temp
   end
 
+  # O(n) O(1)
+  def juggling_method
+    n = @array.length
+    d = @rotate_by
+    for i in 0...gcd(d, n)
+      # move ith values of each set
+      temp = @array[i]
+      j = i
+      while true do
+        k = j + d
+        if k >= n
+          k = k - n
+        end
+        if k == i
+          break
+        end
+        @array[j] = @array[k]
+        j = k
+      end
+      @array[j] = temp
+    end
+    puts "Array after rotation is #{@array}"
+  end
+
+  # Fuction to get gcd of a and b
+  def gcd(a, b)
+    return a if b == 0
+    return gcd(b, a % b)
+  end   
+
+
 end
 
 customArray = ArrayUtil.new
@@ -79,5 +111,6 @@ customArray.addNElements(10,10, [0,1,2,3,4,5,6,7,8,9])
 array_rotation = ArrayRotation.new(customArray.arr, 4)
 
 # rotate using temp array
-# array_rotation.use_temp_array
-array_rotation.left_rotate
+array_rotation.use_temp_array
+# array_rotation.left_rotate
+# array_rotation.juggling_method
