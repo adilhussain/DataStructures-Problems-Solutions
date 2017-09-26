@@ -44,6 +44,34 @@ class ArrayRotation
 
     puts "Array after rotation by #{@rotate_by} is #{@array.to_s}"
   end
+
+  # METHOD 2 (Rotate one by one)
+
+  # leftRotate(arr[], d, n)
+  # start
+  #   For i = 0 to i < d
+  #     Left rotate all elements of arr[] by one
+  # end
+
+  # Function to left rotate arr[] of size n by d
+  def left_rotate()
+    for i in 0...@rotate_by
+      puts "AS:: #{i}"
+      left_rotateby_one
+    end
+    puts "Array after rotation is #{@array}"
+  end
+
+  def left_rotateby_one
+    puts "s:: #{@array}"
+    temp = @array[0]
+    n = @array.length
+    for i in 0...(n - 1)
+      @array[i] = @array[i + 1]
+    end
+    @array[n-1] = temp
+  end
+
 end
 
 customArray = ArrayUtil.new
@@ -51,4 +79,5 @@ customArray.addNElements(10,10, [0,1,2,3,4,5,6,7,8,9])
 array_rotation = ArrayRotation.new(customArray.arr, 4)
 
 # rotate using temp array
-array_rotation.use_temp_array
+# array_rotation.use_temp_array
+array_rotation.left_rotate
